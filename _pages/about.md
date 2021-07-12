@@ -15,7 +15,7 @@ selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true  # includes social icons at the bottom of the page
 ---
 <br>
-Hi, I'm Gin, a PhD candidate at University of Waterloo, supervised by [Professor Jimmy Lin](https://cs.uwaterloo.ca/~jimmylin/). Before coming to Canada, I spent four years at Rensselaer Polytechnic Institute and did research at Blender, supervised by [Professor Heng Ji](https://cs.illinois.edu/about/people/faculty/hengji).
+Hi, I'm Gin, a PhD student at University of Waterloo, supervised by [Professor Jimmy Lin](https://cs.uwaterloo.ca/~jimmylin/). Before coming to Canada, I spent four years at Rensselaer Polytechnic Institute and did research at Blender, supervised by [Professor Heng Ji](https://cs.illinois.edu/about/people/faculty/hengji).
 
 On a high level, I'm mainly interested in understanding and improving machine learning.
 My recent focus is on compositional generalization and interpretability.
