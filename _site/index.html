@@ -7,7 +7,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 <title>Zhiying (Gin)  Jiang</title>
-<meta name="description" content="A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
+<meta name="description" content="gin's personal website
 ">
 
 <!-- Open Graph -->
@@ -55,7 +55,7 @@
 
   </head>
 
-  <body class="fixed-top-nav ">
+  <body class="fixed-top-nav sticky-bottom-footer">
 
     <!-- Header -->
 
@@ -155,7 +155,7 @@
 
     <div class="clearfix">
       <p><br />
-Hi, I’m Gin, a PhD candidate at University of Waterloo, supervised by <a href="https://cs.uwaterloo.ca/~jimmylin/">Professor Jimmy Lin</a>. Before coming to Canada, I spent four years at Rensselaer Polytechnic Institute and did research at Blender, supervised by <a href="https://cs.illinois.edu/about/people/faculty/hengji">Professor Heng Ji</a>.</p>
+Hi, I’m Gin, a PhD student at University of Waterloo, supervised by <a href="https://cs.uwaterloo.ca/~jimmylin/">Professor Jimmy Lin</a>. Before coming to Canada, I spent four years at Rensselaer Polytechnic Institute and did research at Blender, supervised by <a href="https://cs.illinois.edu/about/people/faculty/hengji">Professor Heng Ji</a>.</p>
 
 <p>On a high level, I’m mainly interested in understanding and improving machine learning.
 My recent focus is on compositional generalization and interpretability.</p>
@@ -168,6 +168,108 @@ My recent focus is on compositional generalization and interpretability.</p>
       <div class="publications">
   <h2>Selected Publications</h2>
   <ol class="bibliography"><li><div class="row">
+  <div class="col-sm-2 abbr">
+  
+    
+    <abbr class="badge">BlackBoxNLP</abbr>
+    
+  
+  </div>
+
+  <div id="jiang-etal-2021-bert" class="col-sm-8">
+    
+      <div class="title">How Does BERT Rerank Passages? An Attribution Analysis with Information Bottlenecks</div>
+      <div class="author">
+        
+          
+          
+          
+            
+              
+                
+                  Jiang, Zhiying,
+                
+              
+            
+          
+        
+          
+          
+          
+            
+              
+                
+                  Tang, Raphael,
+                
+              
+            
+          
+        
+          
+          
+          
+            
+              
+                
+                  Xin, Ji,
+                
+              
+            
+          
+        
+          
+          
+          
+            
+              
+                
+                  and Lin, Jimmy
+                
+              
+            
+          
+        
+      </div>
+
+      <div class="periodical">
+      
+        <em>In Proceedings of the Fourth BlackboxNLP Workshop on Analyzing and Interpreting Neural Networks for NLP</em>
+      
+      
+        2021
+      
+      </div>
+    
+
+    <div class="links">
+    
+      <a class="abstract btn btn-sm z-depth-0" role="button">Abs</a>
+    
+    
+    
+    
+      
+      <a href="https://aclanthology.org/2021.blackboxnlp-1.39.pdf" class="btn btn-sm z-depth-0" role="button" target="_blank">PDF</a>
+      
+    
+    
+    
+    
+    
+    
+    
+    </div>
+
+    <!-- Hidden abstract block -->
+    
+    <div class="abstract hidden">
+      <p>Fine-tuned pre-trained transformers achieve the state of the art in passage reranking. Unfortunately, how they make their predictions remains vastly unexplained, especially at the end-to-end, input-to-output level. Little known is how tokens, layers, and passages precisely contribute to the final prediction. In this paper, we address this gap by leveraging the recently developed information bottlenecks for attribution (IBA) framework. On BERT-based models for passage reranking, we quantitatively demonstrate the framework’s veracity in extracting attribution maps, from which we perform detailed, token-wise analysis about how predictions are made. Overall, we find that BERT still cares about exact token matching for reranking; the [CLS] token mainly gathers information for predictions at the last layer; top-ranked passages are robust to token removal; and BERT fine-tuned on MSMARCO has positional bias towards the start of the passage.</p>
+    </div>
+    
+  </div>
+</div>
+</li>
+<li><div class="row">
   <div class="col-sm-2 abbr">
   
     
@@ -289,7 +391,7 @@ My recent focus is on compositional generalization and interpretability.</p>
             
               
                 
-                  Nogueira, Rodrigo,
+                  Nogueira, Rodrigo*,
                 
               
             
@@ -301,7 +403,7 @@ My recent focus is on compositional generalization and interpretability.</p>
             
               
                 
-                  Jiang, Zhiying,
+                  Jiang, Zhiying*,
                 
               
             
@@ -600,108 +702,6 @@ My recent focus is on compositional generalization and interpretability.</p>
     
   </div>
 </div>
-</li>
-<li><div class="row">
-  <div class="col-sm-2 abbr">
-  
-    
-    <abbr class="badge">CEUR</abbr>
-    
-  
-  </div>
-
-  <div id="3d91d2011d1c45e48aa2dbf608c67e5b" class="col-sm-8">
-    
-      <div class="title">Evaluating pretrained transformer models for citation recommendation</div>
-      <div class="author">
-        
-          
-          
-          
-            
-              
-                
-                  Nogueira, Rodrigo,
-                
-              
-            
-          
-        
-          
-          
-          
-            
-              
-                
-                  Jiang, Zhiying,
-                
-              
-            
-          
-        
-          
-          
-          
-            
-              
-                
-                  Cho, Kyunghyun,
-                
-              
-            
-          
-        
-          
-          
-          
-            
-              
-                
-                  and Lin, Jimmy
-                
-              
-            
-          
-        
-      </div>
-
-      <div class="periodical">
-      
-        <em>CEUR Workshop Proceedings</em>
-      
-      
-        2020
-      
-      </div>
-    
-
-    <div class="links">
-    
-      <a class="abstract btn btn-sm z-depth-0" role="button">Abs</a>
-    
-    
-    
-    
-      
-      <a href="http://ceur-ws.org/Vol-2591/paper-09.pdf" class="btn btn-sm z-depth-0" role="button" target="_blank">PDF</a>
-      
-    
-    
-    
-    
-    
-    
-    
-    </div>
-
-    <!-- Hidden abstract block -->
-    
-    <div class="abstract hidden">
-      <p>Citation recommendation systems for the scientific literature, to help authors find papers that should be cited, have the potential to speed up discoveries and uncover new routes for scientific exploration. We treat this task as a ranking problem, which we tackle with a two-stage approach: candidate generation followed by re-ranking. Within this framework, we adapt to the scientific domain a proven combination based on “bag of words” retrieval followed by re-scoring with a BERT model. We experimentally show the effects of domain adaptation, both in terms of pretraining on in-domain data and exploiting in-domain vocabulary. In addition, we evaluate eleven pretrained transformer models and analyze some unexpected failure cases. On three different collections from different scientific disciplines, our models perform close to or at the state of the art in the citation recommendation task.</p>
-    </div>
-    
-  </div>
-</div>
 </li></ol>
 </div>
 
@@ -737,15 +737,6 @@ My recent focus is on compositional generalization and interpretability.</p>
     <!-- Footer -->
 
     
-<footer class="fixed-bottom">
-  <div class="container mt-0">
-    &copy; Copyright 2021 Zhiying (Gin)  Jiang.
-    
-    
-  </div>
-</footer>
-
-
 
   </body>
 

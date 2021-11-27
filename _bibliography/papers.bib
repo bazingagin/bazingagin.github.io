@@ -1,6 +1,35 @@
 ---
 ---
 
+@inproceedings{jiang-etal-2021-bert,
+    abbr={BlackBoxNLP},
+    title = "How Does {BERT} Rerank Passages? An Attribution Analysis with Information Bottlenecks",
+    author = "Jiang, Zhiying  and
+      Tang, Raphael  and
+      Xin, Ji  and
+      Lin, Jimmy",
+    booktitle = "Proceedings of the Fourth BlackboxNLP Workshop on Analyzing and Interpreting Neural Networks for NLP",
+    month = nov,
+    year = "2021",
+    address = "Punta Cana, Dominican Republic",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2021.blackboxnlp-1.39",
+    pages = "496--509",
+    pdf={https://aclanthology.org/2021.blackboxnlp-1.39.pdf},
+    abstract = "Fine-tuned pre-trained transformers achieve the state of the art in passage reranking. Unfortunately, how they make their predictions remains vastly unexplained, especially at the end-to-end, input-to-output level. Little known is how tokens, layers, and passages precisely contribute to the final prediction. In this paper, we address this gap by leveraging the recently developed information bottlenecks for attribution (IBA) framework. On BERT-based models for passage reranking, we quantitatively demonstrate the framework{'}s veracity in extracting attribution maps, from which we perform detailed, token-wise analysis about how predictions are made. Overall, we find that BERT still cares about exact token matching for reranking; the [CLS] token mainly gathers information for predictions at the last layer; top-ranked passages are robust to token removal; and BERT fine-tuned on MSMARCO has positional bias towards the start of the passage.",
+    selected={true}
+}
+
+@article{nogueira2021investigating,
+  abbr={ICLR Workshop},
+  title={Investigating the Limitations of Transformers with Simple Arithmetic Tasks},
+  author={Nogueira, Rodrigo and Jiang, Zhiying and Lin, Jimmy},
+  url="https://mathai-iclr.github.io/papers/papers/MATHAI_11_paper.pdf",
+  pdf={https://mathai-iclr.github.io/papers/papers/MATHAI_11_paper.pdf},
+  journal={Proceedings of the First Mathematical Reasoning in General Artificial Intelligence Workshop, ICLR},
+  year={2021}
+}
+
 @inproceedings{jiang2020inserting,
   abbr={EMNLP2020},
   title={Inserting Information Bottleneck for Attribution in Transformers},
@@ -16,8 +45,8 @@
 
 @inproceedings{nogueira-etal-2020-document,
     title = "Document Ranking with a Pretrained Sequence-to-Sequence Model",
-    author = "Nogueira, Rodrigo  and
-      Jiang, Zhiying  and
+    author = "Nogueira, Rodrigo*  and
+      Jiang, Zhiying*  and
       Pradeep, Ronak  and
       Lin, Jimmy",
   booktitle={Proceedings of the 2020 Conference on Empirical Methods in Natural Language Processing: Findings},
@@ -68,7 +97,6 @@ journal = "CEUR Workshop Proceedings",
 issn = "1613-0073",
 publisher = "CEUR-WS",
 note = "10th International Workshop on Bibliometric-Enhanced Information Retrieval, BIR 2020 ; Conference date: 14-04-2020",
-selected={true},
 abbr={CEUR},
 pdf={http://ceur-ws.org/Vol-2591/paper-09.pdf},
 }
