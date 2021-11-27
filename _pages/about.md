@@ -18,4 +18,7 @@ social: true  # includes social icons at the bottom of the page
 Hi, I'm Gin, a PhD student at University of Waterloo, supervised by [Professor Jimmy Lin](https://cs.uwaterloo.ca/~jimmylin/). Before coming to Canada, I spent four years at Rensselaer Polytechnic Institute and did research at Blender, supervised by [Professor Heng Ji](https://cs.illinois.edu/about/people/faculty/hengji).
 
 On a high level, I'm mainly interested in understanding and improving machine learning.
-My recent focus is on compositional generalization and interpretability.
+Generalization and interpretability are two topics that I'm mostly enthusiastic about, from theory to applications. I also love information theory for its elegancy and how it connects to machine learning. 
+
+Besides machine learning, I also love food science and neuroscience. 
+
