@@ -15,11 +15,12 @@ selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true  # includes social icons at the bottom of the page
 ---
 <br>
-Hi, I'm Gin, a PhD student at University of Waterloo, supervised by [Professor Jimmy Lin](https://cs.uwaterloo.ca/~jimmylin/). Before coming to Canada, I spent four years at Rensselaer Polytechnic Institute and did research at Blender, supervised by [Professor Heng Ji](https://cs.illinois.edu/about/people/faculty/hengji).
+Hi, I'm Gin, a PhD candidate at University of Waterloo, supervised by [Professor Jimmy Lin](https://cs.uwaterloo.ca/~jimmylin/). Before coming to Canada, I spent four years at Rensselaer Polytechnic Institute and did research at Blender, supervised by [Professor Heng Ji](https://cs.illinois.edu/about/people/faculty/hengji).
 
 On a high level, I'm mainly interested in understanding human learning and improving machine learning.
 Generalization and interpretability are two topics that I'm mostly enthusiastic about. I deeply believe in the connection between compression and learning in general which draws my interest towards the information theoretic approaches.
 Besides machine learning, I also love researching about food science and neuroscience.
 
-In addition to research, I created an [online learning platform](https://www.warmmachine.org/) with my co-founder <a href="https://phinoda.github.io">@Quinn</a>.
+In addition to research, I created a [MOOC aggregator](https://www.warmmachine.org/) with my co-founder <a href="https://phinoda.github.io">@Quinn</a>.
+Starting from 2023, we are starting to build [AFAIK](https://afaik.io/) (short for "as far as I know"), embarking on the mission of mapping out human academic knowledge for self-learners.
 
