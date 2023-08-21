@@ -1,5 +1,44 @@
 ---
 ---
+@inproceedings{jiang-etal-2023-low,
+    abbr={ACL2023},
+    title = "{``}Low-Resource{''} Text Classification: A Parameter-Free Classification Method with Compressors",
+    author = "Jiang, Zhiying  and
+      Yang, Matthew  and
+      Tsirlin, Mikhail  and
+      Tang, Raphael  and
+      Dai, Yiqin  and
+      Lin, Jimmy",
+    booktitle = "Findings of the Association for Computational Linguistics: ACL",
+    pdf={https://aclanthology.org/2023.findings-acl.426/},
+    month = jul,
+    year = "2023",
+    address = "Toronto, Canada",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2023.findings-acl.426",
+    doi = "10.18653/v1/2023.findings-acl.426",
+    pages = "6810--6828",
+    abstract = "Deep neural networks (DNNs) are often used for text classification due to their high accuracy. However, DNNs can be computationally intensive, requiring millions of parameters and large amounts of labeled data, which can make them expensive to use, to optimize, and to transfer to out-of-distribution (OOD) cases in practice. In this paper, we propose a non-parametric alternative to DNNs that{'}s easy, lightweight, and universal in text classification: a combination of a simple compressor like \textit{gzip} with a $k$-nearest-neighbor classifier. Without any training parameters, our method achieves results that are competitive with non-pretrained deep learning methods on six in-distribution datasets.It even outperforms BERT on all five OOD datasets, including four low-resource languages. Our method also excels in the few-shot setting, where labeled data are too scarce to train DNNs effectively.",
+    selected={true},
+}
+
+@inproceedings{huang-2023-approx,
+    abbr={preprint},
+    title = "Approximating Human-Like Few-shot Learning with GPT-based Compression",
+    author = "Huang, Cynthia*  and
+      Xie, Yuqing*  and
+      Jiang, Zhiying*  and
+      Lin, Jimmy  and
+      Li, Ming",
+    booktitle = "preprint",
+    pdf={https://arxiv.org/abs/2308.06942},
+    month = aug,
+    year = "2023",
+    url = "https://arxiv.org/abs/2308.06942",
+    abstract = "In this work, we conceptualize the learning process as information compression. We seek to equip generative pre-trained models with human-like learning capabilities that enable data compression during inference. We present a novel approach that utilizes the Generative Pre-trained Transformer (GPT) to approximate Kolmogorov complexity, with the aim of estimating the optimal Information Distance for few-shot learning. We first propose using GPT as a prior for lossless text compression, achieving a noteworthy compression ratio. Experiment with LLAMA2-7B backbone achieves a compression ratio of 15.5 on enwik9. We justify the pre-training objective of GPT models by demonstrating its equivalence to the compression length, and, consequently, its ability to approximate the information distance for texts. Leveraging the approximated information distance, our method allows the direct application of GPT models in quantitative text similarity measurements. Experiment results show that our method overall achieves superior performance compared to embedding and prompt baselines on challenging NLP tasks, including semantic similarity, zero and one-shot text classification, and zero-shot text ranking.",
+    selected={false},
+}
+
 @inproceedings{jiang2022few,
   abbr={NeurIPS2022},
   title={Few-Shot Non-Parametric Learning with Deep Latent Variable Model},
