@@ -251,7 +251,7 @@ For each part, I will first introduce the intuition, and then the formal derivat
 </div>
 <p><br /></p>
 
-<p>The common part between flag-like pairs and Spock pairs is that they both can be converted from one to another easily. To convert colored-Spock to greyscaled-Spock, we can use, for example, python code:</p>
+<p>The common part between flag-like pairs and Spock pairs is that they both can be converted from one to another easily. To convert colored-Spock to greyscaled-Spock, we can use, for example, python code\(^{[0]}\):</p>
 
 <d-code block="" language="python">
 import numpy as np
@@ -584,8 +584,11 @@ The steps of combining unsupervised learning and supervised learning are as foll
 <p>We see that it’s pretty straightforward to just use either nELBO or log probability directly for classification. So you can either use models that pretrained on huge datasets like GPT or use a smaller models pretrained on a local smaller unlabeled dataset like the example of VAE.</p>
 
 <h2 id="footnote">Footnote</h2>
+<p>[0] I also want to mention one irrelevant detail here: averaging RGB channels is just an approximation to greyscale.
+As our eyes actually perceive the luminance of red, green and blue differently, if you want to calculate the real greyscale image, 
+those three channels will have different weights, but still it’s linear combination of three colours.</p>
 
-<p>[1] For people who are extremely curious, you may wonder why there is $\max$ for the information distance. A simpler version of the answer is that $\max$ makes sure the information distance satisfies the symmetry axiom, which is the requirement if we want to define something as <em>metric</em>. Then why it’s $\max$ instead of $\min$? Assume $K(y\vert x) &gt; K(x\vert y)$, using $\min$ can only guarantee the one-way conversion.</p>
+<p>[1] For people who are extremely curious, you may wonder why there is $\max$ for the information distance. A simpler version of the answer is that $\max$ makes sure the information distance satisfies the symmetry axiom, which is the requirement if we want to define something as <em>metric</em>. Then why it’s $\max$ instead of $\min$? Assume $K(y\vert x) &gt; K(x\vert y)$, using $\min$ can only guarantee the one-way conversion. Please also note that the second equation works up to \(O(\log K(x,y))\).</p>
 
 <p>[2] The exact length will differ with different programming languages. But <em>invariance theorem</em> states that the difference caused by programming languages is a negligible constant.</p>
 
