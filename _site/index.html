@@ -35,8 +35,6 @@
 
 <!-- Theming-->
 
-  <script src="/assets/js/theme.js"></script>
-
 
 
 
@@ -84,11 +82,15 @@
             </a>
           </li>
           
+          <!-- Blog -->
+          <li class="nav-item ">
+            <a class="nav-link" href="/blog/">
+              blog
+              
+            </a>
+          </li>
+          
           <!-- Other pages -->
-          
-          
-          
-          
           
           
           
@@ -110,13 +112,6 @@
           </li>
           
           
-          
-            <div class = "toggle-container">
-              <a id = "light-toggle">
-                  <i class="fas fa-moon"></i>
-                  <i class="fas fa-sun"></i>
-              </a>
-            </div>
           
         </ul>
       </div>
@@ -146,7 +141,7 @@
       
       
         <div class="address">
-          <a href="https://phinoda.github.io">@Quinn</a> drew this <a href="https://www.klei.com/games/dont-starve">Don't Starve</a> character of me
+          <a href="https://twitter.com/YiqinDai">@Quinn</a> drew this <a href="https://www.klei.com/games/dont-starve">Don't Starve</a> character of me
 
         </div>
       
@@ -259,7 +254,7 @@ Hi, I’m Gin, a (recent) PhD graduate from University of Waterloo. During the f
 
       <div class="periodical">
       
-        <em>In Findings of the Association for Computational Linguistics: ACL</em>
+        <em>In Findings of the Association for Computational Linguistics (ACL)</em>
       
       
         2023
@@ -290,6 +285,164 @@ Hi, I’m Gin, a (recent) PhD graduate from University of Waterloo. During the f
     
     <div class="abstract hidden">
       <p>Deep neural networks (DNNs) are often used for text classification due to their high accuracy. However, DNNs can be computationally intensive, requiring millions of parameters and large amounts of labeled data, which can make them expensive to use, to optimize, and to transfer to out-of-distribution (OOD) cases in practice. In this paper, we propose a non-parametric alternative to DNNs that’s easy, lightweight, and universal in text classification: a combination of a simple compressor like \textitgzip with a k-nearest-neighbor classifier. Without any training parameters, our method achieves results that are competitive with non-pretrained deep learning methods on six in-distribution datasets.It even outperforms BERT on all five OOD datasets, including four low-resource languages. Our method also excels in the few-shot setting, where labeled data are too scarce to train DNNs effectively.</p>
+    </div>
+    
+  </div>
+</div>
+</li>
+<li><div class="row">
+  <div class="col-sm-2 abbr">
+  
+    
+    <abbr class="badge">ACL2023</abbr>
+    
+  
+  </div>
+
+  <div id="tang-etal-2023-daam" class="col-sm-8">
+    
+      <div class="title">What the DAAM: Interpreting Stable Diffusion Using Cross Attention</div>
+      <div class="author">
+        
+          
+          
+          
+            
+              
+                
+                  Tang, Raphael,
+                
+              
+            
+          
+        
+          
+          
+          
+            
+              
+                
+                  Liu, Linqing,
+                
+              
+            
+          
+        
+          
+          
+          
+            
+              
+                
+                  Pandey, Akshat,
+                
+              
+            
+          
+        
+          
+          
+          
+            
+              
+                
+                  Jiang, Zhiying,
+                
+              
+            
+          
+        
+          
+          
+          
+            
+              
+                
+                  Yang, Gefei,
+                
+              
+            
+          
+        
+          
+          
+          
+            
+              
+                
+                  Kumar, Karun,
+                
+              
+            
+          
+        
+          
+          
+          
+            
+              
+                
+                  Stenetorp, Pontus,
+                
+              
+            
+          
+        
+          
+          
+          
+            
+              
+                
+                  Lin, Jimmy,
+                
+              
+            
+          
+        
+          
+          
+          
+            
+              
+                
+                  and Ture, Ferhan
+                
+              
+            
+          
+        
+      </div>
+
+      <div class="periodical">
+      
+        <em>In Proceedings of Association for Computational Linguistics (ACL), Best Paper Award,</em>
+      
+      
+        2023
+      
+      </div>
+    
+
+    <div class="links">
+    
+      <a class="abstract btn btn-sm z-depth-0" role="button">Abs</a>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    </div>
+
+    <!-- Hidden abstract block -->
+    
+    <div class="abstract hidden">
+      <p>Diffusion models are a milestone in text-to-image generation, but they remain poorly understood, lacking interpretability analyses. In this paper, we perform a text-image attribution analysis on Stable Diffusion, a recently open-sourced model. To produce attribution maps, we upscale and aggregate cross-attention maps in the denoising module, naming our method DAAM. We validate it by testing its segmentation ability on nouns, as well as its generalized attribution quality on all parts of speech, rated by humans. On two generated datasets, we attain a competitive 58.8-64.8 mIoU on noun segmentation and fair to good mean opinion scores (3.4-4.2) on generalized attribution. Then, we apply DAAM to study the role of syntax in the pixel space across head–dependent heat map interaction patterns for ten common dependency relations. We show that, for some relations, the head map consistently subsumes the dependent, while the opposite is true for others. Finally, we study several semantic phenomena, focusing on feature entanglement; we find that the presence of cohyponyms worsens generation quality by 9%, and descriptive adjectives attend too broadly. We are the first to interpret large diffusion models from a visuolinguistic perspective, which enables future research. Our code is at \urlhttps://github.com/castorini/daam.</p>
     </div>
     
   </div>

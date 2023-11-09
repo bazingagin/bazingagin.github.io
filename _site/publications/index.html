@@ -35,8 +35,6 @@
 
 <!-- Theming-->
 
-  <script src="/assets/js/theme.js"></script>
-
 
 
 
@@ -86,11 +84,15 @@
             </a>
           </li>
           
+          <!-- Blog -->
+          <li class="nav-item ">
+            <a class="nav-link" href="/blog/">
+              blog
+              
+            </a>
+          </li>
+          
           <!-- Other pages -->
-          
-          
-          
-          
           
           
           
@@ -114,13 +116,6 @@
           </li>
           
           
-          
-            <div class = "toggle-container">
-              <a id = "light-toggle">
-                  <i class="fas fa-moon"></i>
-                  <i class="fas fa-sun"></i>
-              </a>
-            </div>
           
         </ul>
       </div>
@@ -235,7 +230,7 @@
 
       <div class="periodical">
       
-        <em>In Findings of the Association for Computational Linguistics: ACL</em>
+        <em>In Findings of the Association for Computational Linguistics (ACL)</em>
       
       
         2023
@@ -380,6 +375,164 @@
     
     <div class="abstract hidden">
       <p>In this work, we conceptualize the learning process as information compression. We seek to equip generative pre-trained models with human-like learning capabilities that enable data compression during inference. We present a novel approach that utilizes the Generative Pre-trained Transformer (GPT) to approximate Kolmogorov complexity, with the aim of estimating the optimal Information Distance for few-shot learning. We first propose using GPT as a prior for lossless text compression, achieving a noteworthy compression ratio. Experiment with LLAMA2-7B backbone achieves a compression ratio of 15.5 on enwik9. We justify the pre-training objective of GPT models by demonstrating its equivalence to the compression length, and, consequently, its ability to approximate the information distance for texts. Leveraging the approximated information distance, our method allows the direct application of GPT models in quantitative text similarity measurements. Experiment results show that our method overall achieves superior performance compared to embedding and prompt baselines on challenging NLP tasks, including semantic similarity, zero and one-shot text classification, and zero-shot text ranking.</p>
+    </div>
+    
+  </div>
+</div>
+</li>
+<li><div class="row">
+  <div class="col-sm-2 abbr">
+  
+    
+    <abbr class="badge">ACL2023</abbr>
+    
+  
+  </div>
+
+  <div id="tang-etal-2023-daam" class="col-sm-8">
+    
+      <div class="title">What the DAAM: Interpreting Stable Diffusion Using Cross Attention</div>
+      <div class="author">
+        
+          
+          
+          
+            
+              
+                
+                  Tang, Raphael,
+                
+              
+            
+          
+        
+          
+          
+          
+            
+              
+                
+                  Liu, Linqing,
+                
+              
+            
+          
+        
+          
+          
+          
+            
+              
+                
+                  Pandey, Akshat,
+                
+              
+            
+          
+        
+          
+          
+          
+            
+              
+                
+                  Jiang, Zhiying,
+                
+              
+            
+          
+        
+          
+          
+          
+            
+              
+                
+                  Yang, Gefei,
+                
+              
+            
+          
+        
+          
+          
+          
+            
+              
+                
+                  Kumar, Karun,
+                
+              
+            
+          
+        
+          
+          
+          
+            
+              
+                
+                  Stenetorp, Pontus,
+                
+              
+            
+          
+        
+          
+          
+          
+            
+              
+                
+                  Lin, Jimmy,
+                
+              
+            
+          
+        
+          
+          
+          
+            
+              
+                
+                  and Ture, Ferhan
+                
+              
+            
+          
+        
+      </div>
+
+      <div class="periodical">
+      
+        <em>In Proceedings of Association for Computational Linguistics (ACL), Best Paper Award,</em>
+      
+      
+        2023
+      
+      </div>
+    
+
+    <div class="links">
+    
+      <a class="abstract btn btn-sm z-depth-0" role="button">Abs</a>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    </div>
+
+    <!-- Hidden abstract block -->
+    
+    <div class="abstract hidden">
+      <p>Diffusion models are a milestone in text-to-image generation, but they remain poorly understood, lacking interpretability analyses. In this paper, we perform a text-image attribution analysis on Stable Diffusion, a recently open-sourced model. To produce attribution maps, we upscale and aggregate cross-attention maps in the denoising module, naming our method DAAM. We validate it by testing its segmentation ability on nouns, as well as its generalized attribution quality on all parts of speech, rated by humans. On two generated datasets, we attain a competitive 58.8-64.8 mIoU on noun segmentation and fair to good mean opinion scores (3.4-4.2) on generalized attribution. Then, we apply DAAM to study the role of syntax in the pixel space across head–dependent heat map interaction patterns for ten common dependency relations. We show that, for some relations, the head map consistently subsumes the dependent, while the opposite is true for others. Finally, we study several semantic phenomena, focusing on feature entanglement; we find that the presence of cohyponyms worsens generation quality by 9%, and descriptive adjectives attend too broadly. We are the first to interpret large diffusion models from a visuolinguistic perspective, which enables future research. Our code is at \urlhttps://github.com/castorini/daam.</p>
     </div>
     
   </div>

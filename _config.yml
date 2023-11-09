@@ -59,8 +59,8 @@ google_analytics: UA-XXXXXXXXX # out your google-analytics code
 # Blog
 # -----------------------------------------------------------------------------
 
-blog_name:   # your blog must have a name for it to show up in the nav bar
-blog_description: a simple whitespace theme for academics
+blog_name:  brain-vomit # your blog must have a name for it to show up in the nav bar
+blog_description: vomit stuff i'm interested in / care about
 permalink: /blog/:year/:title/
 
 # Pagination
@@ -152,7 +152,7 @@ enable_google_analytics:  false
 enable_mansory:           true
 enable_math:              true
 enable_tooltips:          false
-enable_darkmode:          true
+enable_darkmode:          false
 show_social_icons:        false
 
 # -----------------------------------------------------------------------------

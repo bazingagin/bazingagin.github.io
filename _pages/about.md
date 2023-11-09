@@ -8,7 +8,7 @@ profile:
   align: right
   image: avatar.png
   address: >
-    <a href="https://phinoda.github.io">@Quinn</a> drew this <a href="https://www.klei.com/games/dont-starve">Don't Starve</a> character of me
+    <a href="https://twitter.com/YiqinDai">@Quinn</a> drew this <a href="https://www.klei.com/games/dont-starve">Don't Starve</a> character of me
 
 news: false  # includes a list of news items
 selected_papers: true # includes a list of papers marked as "selected={true}"
