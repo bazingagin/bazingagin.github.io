@@ -333,7 +333,7 @@ $$\log p(\mathbf{x}) = \log p(x_0) +\sum_{i=1}^n \log p(x_i\vert\mathbf{x}_{i-1}
 
 Unlike VAE, this log likelihood can be calculated empirically, so we use this function as our objective function directly in autoregressive models.
 
-From the message length perspective, Shannon's entropy told us that the minimum code length we can achieve is $H(\mathbf{x})\triangleq \mathbb{E}[-\log p_{\text{data}}(\mathbf{x})],$ where $p_\text{data}$ represents the ground truth of the data distribution. While $p_\text{data}(\mathbf{x})$ is unknown to us, we can use $p(\mathbf{x})$ to approximate, by learning from next-token prediction through samples from the distribution.
+From the message length perspective, Shannon's entropy told us that the minimum code length we can achieve is $H(\mathbf{x})\triangleq \mathbb{E}[-\log p_{\text{data}}(\mathbf{x})],$ where $p_\text{data}$ represents the ground truth of the data distribution. While $p_\text{data}(\mathbf{x})$ is unknown to us, we can use $p(\mathbf{x})$ to approximate, by learning from next-token prediction through samples from the distribution. This is demonstrated in details in Ref[9] and Ref[10].
 
 ### Summary
 
@@ -452,3 +452,5 @@ transactions on Information Theory, 50(12):3250–3264, 2004.
 [8] Zhiying Jiang, Matthew Yang, Mikhail Tsirlin, Raphael Tang, Yiqin Dai, and Jimmy Lin. "“Low-Resource” Text Classification: A Parameter-Free Classification Method with Compressors." In _Findings of the Association for Computational Linguistics: ACL 2023_.
 
 [9] Huang, Cynthia*, Yuqing Xie*, Zhiying Jiang*, Jimmy Lin, and Ming Li. "Approximating Human-Like Few-shot Learning with GPT-based Compression." _arXiv preprint arXiv:2308.06942_ (2023).
+
+[10] Delétang, Grégoire, Anian Ruoss, Paul-Ambroise Duquenne, Elliot Catt, Tim Genewein, Christopher Mattern, Jordi Grau-Moya et al. "Language modeling is compression." arXiv preprint arXiv:2309.10668 (2023).
