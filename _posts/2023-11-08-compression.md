@@ -4,12 +4,12 @@ title: Learning and Compression
 date: 2023-11-09
 tags: kolmogorov complexity
 toc: 
-  - name: When Compression Helps (Supervised) Learning
+  - name: When (Unsupervised) Learning is Compression
     subsections:
       - name: Intuition
       - name: Derivation
       - name: Summary
-  - name: When (Unsupervised) Learning is Compression
+  - name: When Compression Helps (Supervised) Learning
     subsections:
       - name: Intuition
       - name: Derivation
@@ -42,6 +42,143 @@ Learning and compression have inextricable connections. As David MacKay said, ma
 The beautiful part of the connections, at least to me, is that those connections can be mathematically derived.
 I'd like to introduce the connections for people who are also fascinated by the connections between these two.
 For each part, I will first introduce the intuition, and then the formal derivation so for folks who are only interested in high-level ideas can (hopefully) get some inspirations too.
+
+
+
+## When (Unsupervised) Learning is Compression
+
+### Intuition
+
+Shannon's source coding theorem was originally developed to solve communication problems. The purpose of communication is to make sure the message from the sender is delivered to the receiver. Pretty straightforward right?
+
+Now I want to send a message to you by showing a picture:
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        <img class="img-fluid rounded" src="{{ site.baseurl }}/assets/img/compression/drawing4.png" width="150" height="150">
+    </div>
+</div>
+<br>
+
+
+(Assuming) You look puzzled and are not sure what message I'd like to send.
+So I send more pictures:
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        <img class="img-fluid rounded" src="{{ site.baseurl }}/assets/img/compression/drawing5.png" width="200" height="200">
+    </div>
+	<div class="col-sm mt-3 mt-md-0">
+        <img class="img-fluid rounded" src="{{ site.baseurl }}/assets/img/compression/drawing6.png" width="200" height="200">
+    </div>
+	<div class="col-sm mt-3 mt-md-0">
+        <img class="img-fluid rounded" src="{{ site.baseurl }}/assets/img/compression/drawing7.png" width="200" height="200">
+    </div>
+	<div class="col-sm mt-3 mt-md-0">
+        <img class="img-fluid rounded" src="{{ site.baseurl }}/assets/img/compression/drawing8.png" width="200" height="200">
+    </div>
+</div>
+<br>
+
+
+(Still assuming) You now have a clue that the image I sent earlier might be about roman number. 
+
+What just happened? Why sending more images without telling you what is the first image can help you get more information about the first image?
+
+Two important things are happening if you do think the first image is about roman number:
+
+1. You assume the first image and the subsequent images come from the same distribution.
+2. You are trying to capturing regularity/recognizing patterns through those images.
+
+During the process of trying to figure out what's the pattern underlying all those images, without any labels, you are doing unsupervised learning.
+More specifically, the figure below describes what we just did. Encoder here can be understood as me (specifically my thought process of converting the message into the image plus my handwriting process 🤗).
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        <img class="img-fluid rounded" src="{{ site.baseurl }}/assets/img/compression/exp.png" width="600" height="600">
+    </div>
+</div>
+<br>
+
+We can understand the unsupervised learning from below two perspectives, loosely speaking:
+1. From generative models perspective: The procedure of unsupervised learning is to learn to capture regularity. The measurement of how well the regularity is captured is often reflected by how short the estimated compressed length can be. Therefore, we can directly use the estimated compressed length as our objective function.
+2. From message length perspective: As a decoder, you were trying to recover the message I'd like to send. You will know if you are correct by checking with me. Corresponding to unsupervised training on images or texts, we do not have any labels available. So we use the original input source as our ground truth, and compare the output by decoder with the ground truth. The learning procedure is actually learning the data distribution that the input images/texts come from and try to re-generate/recover them as close to the input as possible.
+
+("The answer is 42.")
+
+### Derivation
+
+The above two perspectives are mathematically equivalent with certain assumptions. 
+To be specific, generative models with explicit density estimation can be used as compressors anyways. It's just we often need certain types of coding schemes to convert probability distribution to binary codes. However, when the objective function of generative models is equivalent to minimizing code length, we can use the value of objective function directly as estimated compressed length.
+Those generative models include but are not limited to: variational autoencoders, autoregressive models, and flow models. I will walk you through the derivation of the equivalence of commonly used ones.
+
+#### VAE
+
+Following the example, let's first dive into variational autoencoder (VAE), which has similar encoder-decoder architecture as the example above.
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        <img class="img-fluid rounded" src="{{ site.baseurl }}/assets/img/compression/vae.png" width="600" height="600">
+    </div>
+</div>
+<br>
+
+
+Remember from the 2nd perspective (the perspective of generative models), we were trying to learn the data distribution so that we can generate the input message.
+Then let's just look into the data distribution:
+
+$$\log p(\mathbf{x}) = \log\int p(\mathbf{x}\vert \mathbf{z})p(\mathbf{z}) d\mathbf{z}$$
+
+The problem is that the above equation is intractable. So we introduce another more "controllable" distribution $q_\phi(\mathbf{z}\vert\mathbf{x})$ to approximate $p(\mathbf{z}\vert\mathbf{x})$, which enables us to derive a lowerbound ($\phi$, $\theta$ here indicates the distribution is modeled by neural networks with learnable parameters):
+
+$$\log p_\theta(\mathbf{x})  = \mathbb{E}_{q_\phi(\mathbf{z}\vert\mathbf{x})}\log \frac{p_\theta(\mathbf{x},\mathbf{z})}{q_\phi(\mathbf{z}\vert\mathbf{x})} + \mathbb{E}_{q_\phi(\mathbf{z}\vert\mathbf{x})}\log \frac{q_\phi(\mathbf{z}\vert\mathbf{x})}{p(\mathbf{z}\vert\mathbf{x})}.$$
+
+$$\text{ELBO} = \mathbb{E}_{q_\phi(\mathbf{z}\vert\mathbf{x})} 
+\log \frac{p_\theta(\mathbf{x},\mathbf{z})}{q_\phi(\mathbf{z}\vert\mathbf{x})} = \log p_\theta(\mathbf{x}) - D_{KL}(q_\phi(\mathbf{z}\vert\mathbf{x})\|p(\mathbf{z}\vert\mathbf{x})).$$
+
+The RHS is the typical loss function of VAE, which is called evidence lowerbound (ELBO).
+
+Now let's start from communication (message length) perspective.
+<br>
+
+Following the tradition, let's assume we have a sender named Alice and a receiver named Bob. This part of derivation relies on the prior knowledge of "bits-back" argument. To put it simply, we assume Alice has some extra bits that she'd like to send alongside of the original message. 
+This extra bits can be understood as some kind of seed for Alice to draw sample from. It's also assumed that both Alice and Bob have access to $$p(\mathbf{z})$$, $$p_\theta(\mathbf{x}|\mathbf{z})$$, $$q_\phi(\mathbf{z}|\mathbf{x})$$, where $$p(\mathbf{z})$$ is the prior distribution, $$p_\theta(\mathbf{x}|\mathbf{z})$$ is a generative model and $$q_\phi(\mathbf{z}|\mathbf{x})$$ is the inference model. 
+
+Then the procedure of Alice sending a message can be summarized as the figure below: Alice first decodes the extra information according to $$q_\phi(\mathbf{z} \vert \mathbf{x})$$, $$\mathbf{z}$$ is further used to encode $$\mathbf{x}$$ with $$p(\mathbf{x}\vert \mathbf{z})$$ and $$\mathbf{z}$$ is encoded using $$p_\theta(\mathbf{z})$$.
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        <img class="img-fluid rounded" src="{{ site.baseurl }}/assets/img/compression/bbans.png" width="500" height="500">
+    </div>
+</div>
+<br>
+
+
+The total length of final bistream is therefore:
+
+$$N = n_{\text{extra}} + \log q_\phi(\mathbf{z}\vert\mathbf{x}) - \log p_\theta(\mathbf{x}\vert\mathbf{z}) - \log p(\mathbf{z}),$$
+
+$$\mathbb{E}_{q_\phi(\mathbf{z}\vert\mathbf{x})}[N-n_{\text{extra}}] = -\mathbb{E}_{q_\phi(\mathbf{z}\vert\mathbf{x})}\log \frac{p_\theta(\mathbf{x},\mathbf{z})}{q_\phi(\mathbf{z}\vert\mathbf{x})} = -\text{ELBO}.$$
+
+Now we can see that optimizing latent variable models (learning) is equivalent to minimizing the code length through bits-back coding using the model (compression) !
+
+#### GPT (and other Autoregressive models)
+
+The equivalence between Autoregressive models's loss function and minimizing message length is pretty obvious.
+
+Starting from probabilistic modeling (generative model)'s perspective, we still want to model the probability distribution $\log p(\mathbf{x})$. Now we are modeling autoregressive models, which means:
+
+$$\log p(\mathbf{x}) = \log p(x_0) +\sum_{i=1}^n \log p(x_i\vert\mathbf{x}_{i-1}).$$
+
+Unlike VAE, this log likelihood can be calculated empirically, so we use this function as our objective function directly in autoregressive models.
+
+From the message length perspective, Shannon's entropy told us that the minimum code length we can achieve is $H(\mathbf{x})\triangleq \mathbb{E}[-\log p_{\text{data}}(\mathbf{x})],$ where $p_\text{data}$ represents the ground truth of the data distribution. While $p_\text{data}(\mathbf{x})$ is unknown to us, we can use $p(\mathbf{x})$ to approximate, by learning from next-token prediction through samples from the distribution. This is demonstrated in details in Ref[9] and Ref[10].
+
+### Summary
+
+This part can be summarized into two main points:
+1. Optimizing certain generative models = Minimizing code length
+2. The value of loss function can be used as estimated code length.
 
 ## When Compression Helps (Supervised) Learning
 
@@ -204,142 +341,6 @@ Overall, the procedure of "how can compressor help supervised learning" can be s
 </div>
 <br>
 
-
-
-## When (Unsupervised) Learning is Compression
-
-### Intuition
-
-Shannon's source coding theorem was originally developed to solve communication problems. The purpose of communication is to make sure the message from the sender is delivered to the receiver. Pretty straightforward right?
-
-Now I want to send a message to you by showing a picture:
-
-<div class="row mt-3">
-    <div class="col-sm mt-3 mt-md-0">
-        <img class="img-fluid rounded" src="{{ site.baseurl }}/assets/img/compression/drawing4.png" width="150" height="150">
-    </div>
-</div>
-<br>
-
-
-(Assuming) You look puzzled and are not sure what message I'd like to send.
-So I send more pictures:
-
-<div class="row mt-3">
-    <div class="col-sm mt-3 mt-md-0">
-        <img class="img-fluid rounded" src="{{ site.baseurl }}/assets/img/compression/drawing5.png" width="200" height="200">
-    </div>
-	<div class="col-sm mt-3 mt-md-0">
-        <img class="img-fluid rounded" src="{{ site.baseurl }}/assets/img/compression/drawing6.png" width="200" height="200">
-    </div>
-	<div class="col-sm mt-3 mt-md-0">
-        <img class="img-fluid rounded" src="{{ site.baseurl }}/assets/img/compression/drawing7.png" width="200" height="200">
-    </div>
-	<div class="col-sm mt-3 mt-md-0">
-        <img class="img-fluid rounded" src="{{ site.baseurl }}/assets/img/compression/drawing8.png" width="200" height="200">
-    </div>
-</div>
-<br>
-
-
-(Still assuming) You now have a clue that the image I sent earlier might be about roman number. 
-
-What just happened? Why sending more images without telling you what is the first image can help you get more information about the first image?
-
-Two important things are happening if you do think the first image is about roman number:
-
-1. You *assume* the first image and the subsequent images come from the same distribution.
-2. You are trying to *capturing regularity/recognizing patterns* through those images.
-
-During the process of trying to figure out what's the pattern underlying all those images, without any labels, you are doing unsupervised learning.
-More specifically, the figure below describes what we just did. Encoder here can be understood as me (specifically my thought process of converting the message into the image plus my handwriting process 🤗).
-
-<div class="row mt-3">
-    <div class="col-sm mt-3 mt-md-0">
-        <img class="img-fluid rounded" src="{{ site.baseurl }}/assets/img/compression/exp.png" width="600" height="600">
-    </div>
-</div>
-<br>
-
-We can understand the unsupervised learning from below two perspectives, loosely speaking:
-1. The procedure of unsupervised learning is to learn to capture regularity. The measurement of how well the regularity is captured is often reflected by how short the estimated compressed length can be. Therefore, we can directly use the estimated compressed length as our objective function.
-2. As a decoder, you were trying to recover the message I'd like to send. You will know if you are correct by checking with me. Corresponding to unsupervised training on images or texts, we do not have any labels available. So we use the original input source as our ground truth, and compare the output by decoder with the ground truth. The learning procedure is actually learning the data distribution that the input images/texts come from and try to re-generate/recover them as close to the input as possible.
-
-("The answer is 42.")
-
-### Derivation
-
-The above two perspectives are mathematically equivalent with certain assumptions. 
-To be specific, generative models with explicit density estimation can be used as compressors anyways. It's just we often need certain types of coding schemes to convert probability distribution to binary codes. However, when the objective function of generative models is equivalent to minimizing code length, we can use the value of objective function directly as estimated compressed length.
-Those generative models include but are not limited to: variational autoencoders, autoregressive models, and flow models. I will walk you through the derivation of the equivalence of commonly used ones.
-
-#### VAE
-
-Following the example, let's first dive into variational autoencoder (VAE), which has similar encoder-decoder architecture as the example above.
-
-<div class="row mt-3">
-    <div class="col-sm mt-3 mt-md-0">
-        <img class="img-fluid rounded" src="{{ site.baseurl }}/assets/img/compression/vae.png" width="600" height="600">
-    </div>
-</div>
-<br>
-
-
-Remember from the 2nd perspective (the perspective of generative models), we were trying to learn the data distribution so that we can generate the input message.
-Then let's just look into the data distribution:
-
-$$\log p(\mathbf{x}) = \log\int p(\mathbf{x}\vert \mathbf{z})p(\mathbf{z}) d\mathbf{z}$$
-
-The problem is that the above equation is intractable. So we introduce another more "controllable" distribution $q_\phi(\mathbf{z}\vert\mathbf{x})$ to approximate $p(\mathbf{z}\vert\mathbf{x})$, which enables us to derive a lowerbound ($\phi$, $\theta$ here indicates the distribution is modeled by neural networks with learnable parameters):
-
-$$\log p_\theta(\mathbf{x})  = \mathbb{E}_{q_\phi(\mathbf{z}\vert\mathbf{x})}\log \frac{p_\theta(\mathbf{x},\mathbf{z})}{q_\phi(\mathbf{z}\vert\mathbf{x})} + \mathbb{E}_{q_\phi(\mathbf{z}\vert\mathbf{x})}\log \frac{q_\phi(\mathbf{z}\vert\mathbf{x})}{p(\mathbf{z}\vert\mathbf{x})}.$$
-
-$$\text{ELBO} = \mathbb{E}_{q_\phi(\mathbf{z}\vert\mathbf{x})} 
-\log \frac{p_\theta(\mathbf{x},\mathbf{z})}{q_\phi(\mathbf{z}\vert\mathbf{x})} = \log p_\theta(\mathbf{x}) - D_{KL}(q_\phi(\mathbf{z}\vert\mathbf{x})\|p(\mathbf{z}\vert\mathbf{x})).$$
-
-The RHS is the typical loss function of VAE, which is called evidence lowerbound (ELBO).
-
-Now let's start from communication (message length) perspective.
-<br>
-
-Following the tradition, let's assume we have a sender named Alice and a receiver named Bob. This part of derivation relies on the prior knowledge of "bits-back" argument. To put it simply, we assume Alice has some extra bits that she'd like to send alongside of the original message. 
-This extra bits can be understood as some kind of seed for Alice to draw sample from. It's also assumed that both Alice and Bob have access to $$p(\mathbf{z})$$, $$p_\theta(\mathbf{x}|\mathbf{z})$$, $$q_\phi(\mathbf{z}|\mathbf{x})$$, where $$p(\mathbf{z})$$ is the prior distribution, $$p_\theta(\mathbf{x}|\mathbf{z})$$ is a generative model and $$q_\phi(\mathbf{z}|\mathbf{x})$$ is the inference model. 
-
-Then the procedure of Alice sending a message can be summarized as the figure below: Alice first decodes the extra information according to $$q_\phi(\mathbf{z} \vert \mathbf{x})$$, $$\mathbf{z}$$ is further used to encode $$\mathbf{x}$$ with $$p(\mathbf{x}\vert \mathbf{z})$$ and $$\mathbf{z}$$ is encoded using $$p_\theta(\mathbf{z})$$.
-
-<div class="row mt-3">
-    <div class="col-sm mt-3 mt-md-0">
-        <img class="img-fluid rounded" src="{{ site.baseurl }}/assets/img/compression/bbans.png" width="500" height="500">
-    </div>
-</div>
-<br>
-
-
-The total length of final bistream is therefore:
-
-$$N = n_{\text{extra}} + \log q_\phi(\mathbf{z}\vert\mathbf{x}) - \log p_\theta(\mathbf{x}\vert\mathbf{z}) - \log p(\mathbf{z}),$$
-
-$$\mathbb{E}_{q_\phi(\mathbf{z}\vert\mathbf{x})}[N-n_{\text{extra}}] = -\mathbb{E}_{q_\phi(\mathbf{z}\vert\mathbf{x})}\log \frac{p_\theta(\mathbf{x},\mathbf{z})}{q_\phi(\mathbf{z}\vert\mathbf{x})} = -\text{ELBO}.$$
-
-Now we can see that optimizing latent variable models (learning) is equivalent to minimizing the code length through bits-back coding using the model (compression) !
-
-#### GPT (and other Autoregressive models)
-
-The equivalence between Autoregressive models's loss function and minimizing message length is pretty obvious.
-
-Starting from probabilistic modeling (generative model)'s perspective, we still want to model the probability distribution $\log p(\mathbf{x})$. Now we are modeling autoregressive models, which means:
-
-$$\log p(\mathbf{x}) = \log p(x_0) +\sum_{i=1}^n \log p(x_i\vert\mathbf{x}_{i-1}).$$
-
-Unlike VAE, this log likelihood can be calculated empirically, so we use this function as our objective function directly in autoregressive models.
-
-From the message length perspective, Shannon's entropy told us that the minimum code length we can achieve is $H(\mathbf{x})\triangleq \mathbb{E}[-\log p_{\text{data}}(\mathbf{x})],$ where $p_\text{data}$ represents the ground truth of the data distribution. While $p_\text{data}(\mathbf{x})$ is unknown to us, we can use $p(\mathbf{x})$ to approximate, by learning from next-token prediction through samples from the distribution. This is demonstrated in details in Ref[9] and Ref[10].
-
-### Summary
-
-This part can be summarized into two main points:
-1. Optimizing certain generative models = Minimizing code length
-2. The value of loss function can be used as estimated code length.
 
 ## When the above two combined
 
