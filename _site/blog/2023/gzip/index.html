@@ -218,14 +218,14 @@ So I really appreciate people like Sebastian and Abhinav who introduced the idea
 <ol>
   <li>I think gzip+knn is overhyped, but the framework and theory behind is not.</li>
   <li>The original code didn’t have a bug of calculating top $k$ accuracy. It calculates the maximum accuracy when tied. It is documented in the paper Appendix C in the first place$^{[2]}$.</li>
-  <li>Some people argue using “maximum” as tied strategy is an unfair comparison, so we add result using “random” strategy when tied. Only look at “random” result, the conclusion is that:<br />
+  <li>Some people mentioned using “maximum” as tied strategy is an unfair comparison, so we add result using “random” strategy when tied. Only look at “random” result, the conclusion is that:<br />
  (1). In the few-shot settings, gzip(rand) outperforms all methods on Kinyarwanda, Kirundi, Filipino, and SogouNews but is worse than mBERT on Swahili, on which mBERT has been pretained.<br />
  (2). In the full dataset setting, gzip(rand) is only highest on SogouNews, is competitive on Kinyarwanda and Swahili, and is bad on Kirundi and updated DengueFilipino.</li>
   <li>Considering the NFL theorem, gzip is leaning towards the “universal” side.</li>
-  <li>For practitioners, when to use gzip? (1) When you have no prior knowledge about the datasets and only have few labeled data available (few-shot scenario); or (2) When the datasets are very compressible (both full and few-shot).</li>
+  <li>For practitioners, when to use gzip? (1) When you have no prior knowledge about the datasets and only have few labeled data available (few-shot scenario); or (2) When the datasets are very compressible (in both full and few-shot settings).</li>
 </ol>
 
-<p>For this blog, I will briefly recap the main idea, then discuss about tie-breaking strategy and added results, also go into practical guide and limitations, and my personal thoughts about its future work.</p>
+<p>In this blog, I will briefly recap the main idea, then discuss about tie-breaking strategy and added results, also go into practical guide and limitations, and my personal thoughts about its future work.</p>
 
 <h2 id="main-idea">Main Idea</h2>
 <h3 id="intuition">Intuition</h3>
@@ -283,14 +283,14 @@ img2 = np.fliplr(img1)
 Looking at the above python program, you may have already had an intuition about why it’s not computable - it’s hard to know whether the program you wrote is the shortest one$^{[4]}$. Instead, you can just <em>approximate</em> the shortest one.</p>
 
 <p>To have a computable version of <em>information distance</em>, <em>Normalized Compression Distance (NCD)</em> is defined$^{[6]}$, which is the distance metric used in all the experiments.
-Basically, NCD uses compressors to approximate the shortest program that can convert one object to another, and it normalizes this value so that <em>the length of the original object won’t matter a lot</em>.
+Basically, NCD uses compressors to approximate the shortest program that can convert one object to another, and it normalizes this value so that the length of the original object won’t matter a lot.
 If you are interested in how to derive NCD, I wrote <a href="https://bazingagin.github.io/blog/2023/compression/">another blog</a> to introduce the derivation in detail.</p>
 
 <p>With the help of NCD, we can calculate the distance between any two objects. So when we have a test data point $x_{test}$, we can use NCD to calculate the distance between $x_{test}$ and other training points. We then predict $x_{test}$’s label by the majority vote of training points’ labels (the high-level summary about $k$-nearest-neighbor classifier).</p>
 
 <h2 id="concerns-regarding-to-accuracy-calculation">Concerns Regarding to Accuracy Calculation</h2>
 
-<p>There have been a lot of discussions$^{[7]}$ surrounding the reported accuracy - whether it’s top-$k$ accuracy, whether it’s a fair comparison, etc. I’d like to clarify misconceptions about top-$k$ accuracy and share added results with subjective comments on this issue.</p>
+<p>There have been a lot of discussions$^{[7]}$ surrounding the reported accuracy - whether it’s top-$k$ accuracy, whether it’s a fair comparison, etc. I’d like to clarify misconceptions about top-$k$ accuracy and share added results as well as comments on this issue.</p>
 <h3 id="choice-of-k">Choice of \(k\)</h3>
 
 <p>Traditionally in $k$NN, the rule of thumb to pick $k$ is to use $\sqrt{n}$, where $n$ is the number of training samples$^{[6]}$. In our experiments, we have both full-data setting and few-shot setting, where only very limited number of labeled data are given. In order to use one $k$ for all experiments and fit the 5-shot setting, we use $\sqrt{5}\approx 2$. But setting $k$ to an even number is not a great choice and we will see the reason in a minute.</p>
@@ -331,7 +331,7 @@ for pair in sorted_pred_lab:
 <p>What is the definition of top-$k$ accuracy exactly? Below is the definition copied from <a href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.top_k_accuracy_score.html">scikit-learn</a>:</p>
 
 <blockquote>
-  <p>It computes the number of times where the correct label is among the top <code class="language-plaintext highlighter-rouge">k</code> labels (ranked by predicted scores) predicted. $^{[8]}$ [Def.1]</p>
+  <p>It computes the number of times where the correct label is among the top $k$ labels (ranked by predicted scores) predicted. $^{[8]}$ [Def.1]</p>
 </blockquote>
 
 <p>Now recall that discriminative models like BERT will output a list of predicted classes with scores before picking the most possible one. Take trinary classification as an example, suppose we have only three classes - <code class="language-plaintext highlighter-rouge">tech</code>, <code class="language-plaintext highlighter-rouge">sports</code>, and <code class="language-plaintext highlighter-rouge">politics</code>, we will have probability predicted for each model like below:</p>
@@ -372,19 +372,25 @@ sports</p>
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
+        <img class="img-fluid rounded" src="/assets/img/gzip/more_k_results.png" />
+    </div>
+</div>
+<p><br /></p>
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
         <img class="img-fluid rounded" src="/assets/img/gzip/add_result.png" />
     </div>
 </div>
 <p><br /></p>
 
 <p>Results for W2V and SentBERT under <code class="language-plaintext highlighter-rouge">random</code> are also included for comparison. 
-So if we only compare the result with <code class="language-plaintext highlighter-rouge">random</code>, we can see that under 5-shot settings, <em>gzip</em>(rand) outperforms all methods on Kinyarwanda, Kirundi, Filipino, and SogouNews but is worse than mBERT on Swahili, on which mBERT has been pretained. In the full dataset setting, <em>gzip</em>(rand) is only highest on SogouNews, is competitive on Kinyarwanda and Swahili, and is bad on Kirundi and updated DengueFilipino.</p>
+So if we only compare the result with <code class="language-plaintext highlighter-rouge">random</code>, we can see that under 5-shot settings, <em>gzip</em> (rand) outperforms all methods on Kinyarwanda, Kirundi, Filipino, and SogouNews but is worse than mBERT on Swahili, on which mBERT has been pretained. In the full dataset setting, <em>gzip</em> (rand) is only highest on SogouNews, is competitive on Kinyarwanda and Swahili, and is bad on Kirundi and updated DengueFilipino.</p>
 
 <p>Side note: I also received comments saying it’s unfair to compare BERT to <em>gzip</em> because BERT has not been pretrained on low-resource languages… That made me think “fair comparison” is a relatively subjective standard - why no one mentions it’s unfair to compare <em>gzip</em> to BERT, who has been pretrained on billions of tokens while <em>gzip</em> and other methods do not have access to? Probably because BERT is so conveniently accessible and is a standard in all kinds of benchmarks. So it is like an unspoken academic norm instead of veritas to me. Other norms include but not limited to “you are not expected to use commercial/proprietary models like chatGPT when doing evaluation in academic papers”. Not trying to self-defend here, as I mentioned it’s my mistake to not include the results of <code class="language-plaintext highlighter-rouge">random</code> and <code class="language-plaintext highlighter-rouge">minimum</code> in the paper, but I do think there tends to be bias towards what’s fair and what’s unfair based on certain norms in general.</p>
 
 <h2 id="suitable-scenarios">Suitable Scenarios</h2>
 
-<p><em>gzip</em>+$k$NN has advantages like:</p>
+<p><em>gzip</em>+$k$NN’s advantages include:</p>
 <ol>
   <li>Easy to understand and implement.</li>
   <li>Universal (i. data-type agnostic: input can be images, texts, time-series etc., ii. no prior knowledge about the dataset needed)</li>
@@ -394,7 +400,7 @@ So if we only compare the result with <code class="language-plaintext highlighte
 <p>But practically when do we want to use <em>gzip</em>+$k$NN instead of pre-trained language models? The most suitable ones are when we are dealing with:</p>
 <ol>
   <li>Low-resource datasets. Either it’s low-resource languages or other OOD image datasets that pretrained models haven’t seen a lot.</li>
-  <li>Datasets that are compressible. The reason this method can work is because compressors can capture regularity and datasets that are compressible means the patterns are more obvious, which is verified through experiments in Appendix F.</li>
+  <li>Datasets that are compressible. The reason this method can work is because compressors can capture regularity and datasets that are compressible means the patterns are more obvious, which is verified through our experiments in Appendix F.</li>
 </ol>
 
 <h2 id="limitations">Limitations</h2>
@@ -405,7 +411,7 @@ So if we only compare the result with <code class="language-plaintext highlighte
 
 <p>As for the limitation of the method itself, the top one concern is the speed, due to the $O(n^2)$ computational complexity of $k$NN. Practically, with the help of multithread, the speed is not a big concern with ordinary datasets, especially those low-resource datasets. But if we want to apply the method to really large datasets (e.g., millions instances of training data), more efficient versions of the metric need to be explored (e.g., LZJD$^{[9]}$).</p>
 
-<p>Beyond the method of <em>gzip</em>+$k$NN, there is a simple and fast alternative of compression-based method: instead of concatenating test sample with <em>each</em> training sample, we concatenate all training samples for each class $c$, and get the compressed length $C(d_c)$. During the inference time, for test sample $d_u$, we can just use $argmin_c C(d_c d_u)-C(d_c)$ to get the predicted class. This method is documented as $gzip$(ce) in the Section 6.3 of the paper.</p>
+<p>Beyond the method of <em>gzip</em>+$k$NN, there is a simple and fast alternative of compression-based method: instead of concatenating test sample with <em>each</em> training sample, we concatenate all training samples for each class $c$, and get the compressed length $C(d_c)$. During the inference time, for test sample $d_u$, we can just use $argmin_c C(d_c d_u)-C(d_c)$ to get the predicted class. This method is documented as <em>gzip</em> (ce) in the Section 6.3 of the paper.</p>
 
 <p>The drawback of this method is that the effectiveness depends on the “search space” of the compressors (e.g., window size for <em>gzip</em>). Compressors with smaller search space may suffer from failing to utilize all the information in training samples. But better compressors and implementations can overcome this. For example, <a href="https://github.com/cyrilou242/ftcc">this repo</a> called FTCC used a better compressor and implementation than what I did in the paper.</p>
 
@@ -424,8 +430,8 @@ So if we only compare the result with <code class="language-plaintext highlighte
 
 <p>This framework is called <em>Non-Parametric learning with Compression (NPC)</em>. Both the “Compressor” and “Aggregate” parts are replaceable. We can even use neural compressors, which is illustrated in more details in <a href="https://bazingagin.github.io/blog/2023/compression/">my other blog</a>, and other aggregation methods.</p>
 
-<p>We can even go beyond this framework.
-What we want to do is to approximate <em>information distance</em>. But we didn’t directly approximate it, instead, we approximate components of information distance by optimizing our compressors. Although <em>information distance</em> is not differentiable, we have numerous methods to deal with non-differentiability. Maybe we can optimize <em>information distance</em> directly?</p>
+<p>That’s not all - we can even go beyond this framework.
+What we want to do is to approximate <em>information distance</em>. But we didn’t directly approximate it, instead, we approximate components of information distance by optimizing our compressors. Although <em>information distance</em> is not differentiable, we have numerous methods to deal with non-differentiability. So another direction to explore is to optimize <em>information distance</em> directly. After all, no matter it’s sentence-transformer, or siamese network, the fundamental principle is to learn representations guided by similarity metrics.</p>
 
 <h2 id="reference">Reference</h2>
 

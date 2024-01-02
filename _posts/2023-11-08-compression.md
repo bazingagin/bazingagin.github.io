@@ -1,7 +1,7 @@
 ---
 layout: distill
 title: Learning and Compression
-date: 2023-11-09
+date: 2023-12-23
 tags: kolmogorov complexity
 toc: 
   - name: When (Unsupervised) Learning is Compression
@@ -88,7 +88,7 @@ What just happened? Why sending more images without telling you what is the firs
 Two important things are happening if you do think the first image is about roman number:
 
 1. You assume the first image and the subsequent images come from the same distribution.
-2. You are trying to capturing regularity/recognizing patterns through those images.
+2. You are trying to capture regularity/recognize patterns through those images.
 
 During the process of trying to figure out what's the pattern underlying all those images, without any labels, you are doing unsupervised learning.
 More specifically, the figure below describes what we just did. Encoder here can be understood as me (specifically my thought process of converting the message into the image plus my handwriting process 🤗).
@@ -102,7 +102,7 @@ More specifically, the figure below describes what we just did. Encoder here can
 
 We can understand the unsupervised learning from below two perspectives, loosely speaking:
 1. From generative models perspective: The procedure of unsupervised learning is to learn to capture regularity. The measurement of how well the regularity is captured is often reflected by how short the estimated compressed length can be. Therefore, we can directly use the estimated compressed length as our objective function.
-2. From message length perspective: As a decoder, you were trying to recover the message I'd like to send. You will know if you are correct by checking with me. Corresponding to unsupervised training on images or texts, we do not have any labels available. So we use the original input source as our ground truth, and compare the output by decoder with the ground truth. The learning procedure is actually learning the data distribution that the input images/texts come from and try to re-generate/recover them as close to the input as possible.
+2. From message length perspective: As a decoder, you were trying to recover the message I'd like to send. You learn about the correctness by checking with me. Corresponding to unsupervised training on images or texts, we do not have any labels available. So we use the original input source as our ground truth, and compare the output by decoder with the ground truth. The learning procedure is actually learning the data distribution that the input images/texts come from and try to re-generate/recover them as close to the input as possible.
 
 ("The answer is 42.")
 
@@ -124,7 +124,7 @@ Following the example, let's first dive into variational autoencoder (VAE), whic
 <br>
 
 
-Remember from the 2nd perspective (the perspective of generative models), we were trying to learn the data distribution so that we can generate the input message.
+Remember from the perspective of generative models, we were trying to learn the data distribution so that we can generate the input message.
 Then let's just look into the data distribution:
 
 $$\log p(\mathbf{x}) = \log\int p(\mathbf{x}\vert \mathbf{z})p(\mathbf{z}) d\mathbf{z}$$
@@ -138,10 +138,10 @@ $$\text{ELBO} = \mathbb{E}_{q_\phi(\mathbf{z}\vert\mathbf{x})}
 
 The RHS is the typical loss function of VAE, which is called evidence lowerbound (ELBO).
 
-Now let's start from communication (message length) perspective.
+Now let's start from the message length perspective.
 <br>
 
-Following the tradition, let's assume we have a sender named Alice and a receiver named Bob. This part of derivation relies on the prior knowledge of "bits-back" argument. To put it simply, we assume Alice has some extra bits that she'd like to send alongside of the original message. 
+Following the tradition, let's assume we have a sender named Alice and a receiver named Bob. This part of derivation relies on the prior knowledge of "bits-back" argument. To put it simply, we assume Alice has some extra bits that she'd like to send alongside with the original message. 
 This extra bits can be understood as some kind of seed for Alice to draw sample from. It's also assumed that both Alice and Bob have access to $$p(\mathbf{z})$$, $$p_\theta(\mathbf{x}|\mathbf{z})$$, $$q_\phi(\mathbf{z}|\mathbf{x})$$, where $$p(\mathbf{z})$$ is the prior distribution, $$p_\theta(\mathbf{x}|\mathbf{z})$$ is a generative model and $$q_\phi(\mathbf{z}|\mathbf{x})$$ is the inference model. 
 
 Then the procedure of Alice sending a message can be summarized as the figure below: Alice first decodes the extra information according to $$q_\phi(\mathbf{z} \vert \mathbf{x})$$, $$\mathbf{z}$$ is further used to encode $$\mathbf{x}$$ with $$p(\mathbf{x}\vert \mathbf{z})$$ and $$\mathbf{z}$$ is encoded using $$p_\theta(\mathbf{z})$$.
@@ -160,13 +160,13 @@ $$N = n_{\text{extra}} + \log q_\phi(\mathbf{z}\vert\mathbf{x}) - \log p_\theta(
 
 $$\mathbb{E}_{q_\phi(\mathbf{z}\vert\mathbf{x})}[N-n_{\text{extra}}] = -\mathbb{E}_{q_\phi(\mathbf{z}\vert\mathbf{x})}\log \frac{p_\theta(\mathbf{x},\mathbf{z})}{q_\phi(\mathbf{z}\vert\mathbf{x})} = -\text{ELBO}.$$
 
-Now we can see that optimizing latent variable models (learning) is equivalent to minimizing the code length through bits-back coding using the model (compression) !
+Now we can see that optimizing latent variable models (learning) is equivalent to minimizing the code length (compression) through bits-back coding using the model !
 
 #### GPT (and other Autoregressive models)
 
 The equivalence between Autoregressive models's loss function and minimizing message length is pretty obvious.
 
-Starting from probabilistic modeling (generative model)'s perspective, we still want to model the probability distribution $\log p(\mathbf{x})$. Now we are modeling autoregressive models, which means:
+Starting from probabilistic modeling (generative model) perspective, we still want to model the probability distribution $\log p(\mathbf{x})$. Now we are modeling autoregressive models, which means:
 
 $$\log p(\mathbf{x}) = \log p(x_0) +\sum_{i=1}^n \log p(x_i\vert\mathbf{x}_{i-1}).$$
 
@@ -178,7 +178,7 @@ From the message length perspective, Shannon's entropy told us that the minimum 
 
 This part can be summarized into two main points:
 1. Optimizing certain generative models = Minimizing code length
-2. The value of loss function can be used as estimated code length.
+2. The value of loss function of VAE and GPT can be used as estimated code length.
 
 ## When Compression Helps (Supervised) Learning
 
@@ -239,7 +239,7 @@ The common part between the two programs is that they are both short. Naively, w
 
 How does "the minimum length of the program that converts one object to another" have anything to do with compression?
 
-Intuitively, a compressor like gzip can be viewed as a "program", the inner algorithm decides how well the compressor as a program can compress. Regardless of how well the compressor can do, the primary purpose of a lossless compressor is to use as *least* bits as possible by capturing the regularity and reduce redundancy. The *conversion* can be viewed as "compress input A given input B".
+Intuitively, a compressor like gzip can be viewed as a "program", the inner algorithm decides how well the compressor as a program can compress. Regardless of how well the compressor can do, the primary purpose of a lossless compressor is to use as *least* bits as possible by capturing the regularity and reducing redundancy. The *conversion* can be viewed as "compress input A given input B".
 
 Once we have a similarity/distance metric, we can measure the distance between test samples and training samples and use labels of nearest training samples to inform the prediction of test samples.
 
@@ -345,8 +345,8 @@ Overall, the procedure of "how can compressor help supervised learning" can be s
 ## When the above two combined
 
 Now we've known
-1. Compression can help supervised learning.
-2. Unsupervised learning can be viewed as compression.
+1. Unsupervised learning can be viewed as compression.
+2. Compression can help supervised learning.
 
 What does it indicate?
 
@@ -385,8 +385,8 @@ Based on the above, we can decompose NPC framework into three main components as
 
 Let's first take VAE-based compressor with NCD as a concrete example. 
 The steps of combining unsupervised learning and supervised learning are as follows:
-1. We first Train a VAE on the unlabeled training set
-2. Optional: Then Apply ANS with discretization on the trained VAE to get a compressor
+1. We first train a VAE on the unlabeled training set
+2. Optional: Apply ANS with discretization on the trained VAE to get a compressor
 3. We then Calculate the distance matrix between pairs with the compressor and NCD
 4. Finally we Run kNN classifier with the distance matrix
 
@@ -413,7 +413,7 @@ How does this intuition translate into code?
 </div>
 <br>
 
-Pretty simple, something like the figure above shows. The only difference is underlying logic of computing the compressed length. So instead of using gzip to compress text, we are using GPT to estimate the compressed length of the text, which is just the sum of the log probability of the target tokens.
+Pretty simple, something like the figure above shows. The only difference is the logic of computing the compressed length. So instead of using gzip to compress text, we are using GPT to estimate the compressed length of the text, which is just the sum of the log probability of the target tokens.
 
 For those who are interested in the experimental results of using VAE and GPT as compressors for classification, you can check Ref[7] and Ref[9] respectively.
 
