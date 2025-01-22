@@ -10,7 +10,6 @@ email: bazingagin@gmail.com
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
   gin's personal website
 footer_text: 
-
 url:  # the base hostname & protocol for your site
 baseurl:  # the subpath of your site, e.g. /blog/
 last_updated: false # set to true if you want to display last updated in the footer
@@ -59,8 +58,8 @@ google_analytics: UA-XXXXXXXXX # out your google-analytics code
 # Blog
 # -----------------------------------------------------------------------------
 
-blog_name:  brain-vomit # your blog must have a name for it to show up in the nav bar
-blog_description: vomit stuff i'm interested in / care about
+blog_name:  papyrus # your blog must have a name for it to show up in the nav bar
+blog_description: open to debate, grounded in curiosity, and mindful of my own biases
 permalink: /blog/:year/:title/
 
 # Pagination
